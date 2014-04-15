@@ -1,12 +1,17 @@
 $(document).ready(function(){
-    var bruin_page_id = $('#bruin').attr('data-page-id');
-    var trojan_page_id = $('#trojan').attr('data-page-id');
 
-    var bruin = new Page(bruin_page_id, 0);
-    var trojan = new Page(trojan_page_id, 0);
+    var bruin = new Page(
+        $('#bruin').attr('data-page-id'),
+        $('#bruin').attr('data-original-likes')
+    )
+    var trojan = new Page(
+        $('#trojan').attr('data-page-id'),
+        $('#trojan').attr('data-original-likes')
+    )
 
     bruin.getLikes();
     trojan.getLikes();
+
 });
 
 
@@ -26,5 +31,9 @@ function Page(id, original_likes) {
 /* utility functions */
 
 function setLikes(data){
-    $('*[data-page-id="'+data.id+'"]').text(data.likes);
+    var elem = $('*[data-page-id="'+data.id+'"]');
+    elem.find('.total').text(data.likes);
+
+    var delta = data.likes - elem.attr('data-original-likes');
+    elem.find('.delta').text(delta);
 }
